@@ -10,8 +10,8 @@ import java.util.List;
 @Data
 public class Fournisseur {
 
-    @Id@GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String nom;
     private String prenom;
     private String ville;

@@ -1,5 +1,7 @@
 package com.cigi.facturation.entity;
 
+import com.cigi.facturation.util.Enum.EtatCommande;
+import com.cigi.facturation.util.interfaces.GestionEtatCommande;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,17 +11,18 @@ import java.util.List;
 
 @Entity@NoArgsConstructor
 @Data
-public class Commande {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+public class Commande implements GestionEtatCommande {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String designation;
     private float solde;
     private Date date;
+    private EtatCommande etat;
 
     @ManyToOne
     private Client client;
 
-    @OneToOne
+    @OneToOne(mappedBy = "commande")
     private Facture facture;
 
     @ManyToMany
@@ -28,4 +31,12 @@ public class Commande {
     )
     private List<Produit> produits ;
 
+
+    public void confirmer(){
+        this.etat = EtatCommande.CONFIRMEE;
+    }
+
+    public void mettreEnAttente(){
+        this.etat = EtatCommande.EN_ATTENTE;
+    }
 }

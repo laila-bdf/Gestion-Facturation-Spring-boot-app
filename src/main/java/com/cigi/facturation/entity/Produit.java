@@ -10,8 +10,8 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "Categorie",discriminatorType = DiscriminatorType.STRING,length = 2)
 public class Produit {
-    @Id@GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String nom;
     private String description;
     private float prix ;

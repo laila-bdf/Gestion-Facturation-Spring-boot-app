@@ -12,6 +12,6 @@ import java.io.Serializable;
 @AllArgsConstructor@NoArgsConstructor
 public class FournProId implements Serializable {
 
-    private long fournId;
-    private long prodId;
+    private Long fournId;
+    private Long prodId;
 }
