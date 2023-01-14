@@ -16,6 +16,6 @@ public class Fournisseur {
     private String prenom;
     private String ville;
 
-    @OneToMany
+    @OneToMany(mappedBy = "fournisseur")
     private List<Fournisseur_Produit> fournisseur_produits=new ArrayList<>();
 }

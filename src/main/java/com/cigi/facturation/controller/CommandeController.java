@@ -35,7 +35,10 @@ public class CommandeController {
     ResponseEntity<CommandeDTO> save(@RequestBody CommandeDTO commande) {
         return new ResponseEntity<>(commandeService.save(commande), HttpStatus.CREATED);
     }
-
+    @GetMapping("confirm/{id}")
+    public ResponseEntity<CommandeDTO> confirm(@PathVariable Long id) {
+        return new ResponseEntity<>(commandeService.confirmCommande(id), HttpStatus.OK);
+    }
     @DeleteMapping("/{id}")
     ResponseEntity<String> delete(@PathVariable Long id) {
         commandeService.deleteCommandeById(id);

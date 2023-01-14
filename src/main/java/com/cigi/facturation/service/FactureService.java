@@ -7,6 +7,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class FactureService {
     public Facture createFacture(Commande commande) {
-        return null;
+        return null ;
     }
 }

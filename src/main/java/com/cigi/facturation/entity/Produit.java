@@ -14,17 +14,18 @@ public class Produit {
     private Long id;
     private String nom;
     private String description;
-    private float prix ;
+    private float prixUnitaire ;
 
-    @ManyToMany(mappedBy = "produits")
-    private List<Commande> commandes ;
+    @OneToMany(mappedBy = "produit")
+    private List<LigneCommande> ligneCommande = new ArrayList<>();
 
-    @OneToMany
+
+    @OneToMany(mappedBy = "produit")
     private List<Fournisseur_Produit> fournisseur_produits=new ArrayList<>();
 
     public Produit(String nom, String description, float prix) {
         this.nom = nom;
         this.description = description;
-        this.prix = prix;
+        this.prixUnitaire = prix;
     }
 }

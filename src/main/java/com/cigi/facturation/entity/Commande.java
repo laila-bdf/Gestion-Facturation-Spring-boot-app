@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,11 +26,8 @@ public class Commande implements GestionEtatCommande {
     @OneToOne(mappedBy = "commande")
     private Facture facture;
 
-    @ManyToMany
-    @JoinTable(
-            name = "LigneCommande"
-    )
-    private List<Produit> produits ;
+    @OneToMany(mappedBy = "commande")
+    private List<LigneCommande> ligneCommande = new ArrayList<>();
 
 
     public void confirmer(){

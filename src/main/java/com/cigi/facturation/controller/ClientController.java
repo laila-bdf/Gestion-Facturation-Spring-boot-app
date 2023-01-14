@@ -32,6 +32,8 @@ public class ClientController {
         return new ResponseEntity<>(clientservice.findById(id), HttpStatus.OK);
     }
 
+
+
     @PostMapping
     ResponseEntity<ClientDTO> save(@RequestBody ClientDTO client) {
         return new ResponseEntity<>(clientservice.save(client), HttpStatus.CREATED);

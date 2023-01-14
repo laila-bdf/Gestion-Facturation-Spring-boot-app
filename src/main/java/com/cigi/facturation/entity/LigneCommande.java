@@ -1,6 +1,5 @@
 package com.cigi.facturation.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,19 +7,16 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
-import java.awt.print.Book;
 
-@Entity
+@Entity@NoArgsConstructor
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class Fournisseur_Produit {
+public class LigneCommande {
     @EmbeddedId
-    private FournProId id = new FournProId();
+    private LigneCommandeID id = new LigneCommandeID();
 
     @ManyToOne
-    @MapsId("fournId")
-    private Fournisseur fournisseur;
+    @MapsId("commdId")
+    private Commande commande;
 
     @ManyToOne
     @MapsId("prodId")

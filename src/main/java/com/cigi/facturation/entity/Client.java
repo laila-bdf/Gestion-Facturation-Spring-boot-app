@@ -1,5 +1,6 @@
 package com.cigi.facturation.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,5 +19,6 @@ public class Client {
     private String Ville;
 
     @OneToMany(mappedBy = "client")
+    @JsonIgnore
     private List<Commande> commandes = new ArrayList<Commande>();
 }
