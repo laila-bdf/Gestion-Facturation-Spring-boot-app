@@ -12,7 +12,6 @@ public class CommandeDTO {
 
     private Long id;
     private String designation;
-    private float solde;
     private Date date;
     private EtatCommande etat;
     private Client client;

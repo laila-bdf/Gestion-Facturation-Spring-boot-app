@@ -11,8 +11,13 @@ import java.util.Date;
 public class Facture implements GestionEtatFacture {
     @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToOne
+    private Facture ancienneFacture;
+
+    private final float TVA =  0.2f;
     private float montant_HTVA;
-    private Date date;
+    private Date date =new Date();
     private float montant_TTC;
     private Date echeance;
     private float montantPayer = 0;
@@ -30,7 +35,7 @@ public class Facture implements GestionEtatFacture {
         this.montantPayer +=montantPayer;
     }
     @Override
-    public boolean estPayee(){
-        return this.etat == EtatFacture.PAYEE;
+    public void nonPayee(){
+         this.etat = EtatFacture.NON_PAYEE;
     }
 }

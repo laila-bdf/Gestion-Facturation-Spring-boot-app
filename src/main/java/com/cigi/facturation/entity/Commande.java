@@ -16,7 +16,6 @@ public class Commande implements GestionEtatCommande {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String designation;
-    private float solde;
     private Date date;
     private EtatCommande etat;
 

@@ -23,4 +23,8 @@ public class LigneCommande {
     private Produit produit;
 
     private int quantite;
+
+    public LigneCommande(LigneCommandeID id) {
+        this.id = id;
+    }
 }
