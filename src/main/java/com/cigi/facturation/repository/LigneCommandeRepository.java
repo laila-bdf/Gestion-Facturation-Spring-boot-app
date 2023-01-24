@@ -12,4 +12,5 @@ import java.util.ArrayList;
 @Repository
 public interface LigneCommandeRepository extends JpaRepository<LigneCommande, LigneCommandeID> {
     ArrayList<LigneCommande> findByCommande(Commande commande);
+    ArrayList<LigneCommandeID> findByid(Long id);
 }
