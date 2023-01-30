@@ -2,12 +2,13 @@ package com.cigi.facturation.entity;
 
 import com.cigi.facturation.util.Enum.EtatCommande;
 import com.cigi.facturation.util.interfaces.GestionEtatCommande;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity@NoArgsConstructor
@@ -16,16 +17,17 @@ public class Commande implements GestionEtatCommande {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String designation;
-    private Date date;
+    private Date date =new Date(0);
     private EtatCommande etat;
 
     @ManyToOne
     private Client client;
 
-    @OneToOne(mappedBy = "commande")
-    private Facture facture;
+    @OneToMany(mappedBy = "commande", cascade = CascadeType.REMOVE)
+    private List<Facture> facture;
 
-    @OneToMany(mappedBy = "commande")
+    @OneToMany(mappedBy = "commande" , cascade = CascadeType.REMOVE)
+    @JsonIgnore
     private List<LigneCommande> ligneCommande = new ArrayList<>();
 
 

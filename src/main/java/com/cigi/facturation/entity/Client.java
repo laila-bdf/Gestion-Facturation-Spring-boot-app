@@ -18,7 +18,7 @@ public class Client {
     private String prenom;
     private String Ville;
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", cascade = CascadeType.REMOVE)
     @JsonIgnore
     private List<Commande> commandes = new ArrayList<Commande>();
 }

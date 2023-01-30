@@ -31,8 +31,7 @@ public class ProduitService {
 
     public Page<ProduitDTO> findBy(String nom, Pageable page) {
         log.info("Getting page {} of {} clients using filter : {} , {} ", page.getPageNumber(),page.getPageSize(),nom);
-        //return clientMapper.toDTO(clientrepository.findClientByNomIgnoreCaseAndAndPrenomIgnoreCase(nom,prenom,page));
-        return  produitMapper.toDTO(produitrepository.findAll(
+      return  produitMapper.toDTO(produitrepository.findAll(
                 ProduitSpecification.findByNom(nom)
                         ,page));
     }
@@ -48,8 +47,8 @@ public class ProduitService {
         }
     }
 
-    public ProduitDTO save(ProduitDTO produit) {
-        return produitMapper.toDTO(produitrepository.save(produitMapper.toEntity(produit)));
+    public Produit save(Produit produit) {
+        return produitrepository.save(produit);
     }
 
     public ProduitDTO update(ProduitDTO produit, Long id) {

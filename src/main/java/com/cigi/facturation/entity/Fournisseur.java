@@ -16,6 +16,6 @@ public class Fournisseur {
     private String prenom;
     private String ville;
 
-    @OneToMany(mappedBy = "fournisseur")
+    @OneToMany(mappedBy = "fournisseur", cascade = CascadeType.REMOVE)
     private List<Fournisseur_Produit> fournisseur_produits=new ArrayList<>();
 }

@@ -2,6 +2,7 @@ package com.cigi.facturation.entity;
 
 import com.cigi.facturation.util.Enum.EtatFacture;
 import com.cigi.facturation.util.interfaces.GestionEtatFacture;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,19 +12,18 @@ import java.util.Date;
 public class Facture implements GestionEtatFacture {
     @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @OneToOne
+    @JsonIgnore
     private Facture ancienneFacture;
-
     private final float TVA =  0.2f;
     private float montant_HTVA;
     private Date date =new Date();
     private float montant_TTC;
-    private Date echeance;
     private float montantPayer = 0;
     private EtatFacture etat;
 
-    @OneToOne
+    @ManyToOne
+    @JsonIgnore
     private Commande commande;
     @Override
     public void payer(){
