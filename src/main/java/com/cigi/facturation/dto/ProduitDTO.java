@@ -1,5 +1,6 @@
 package com.cigi.facturation.dto;
 
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,4 +14,7 @@ public class ProduitDTO {
     private String description;
     private float prix ;
     private int stock;
+    private String type;
+    private String categorie;
+
 }

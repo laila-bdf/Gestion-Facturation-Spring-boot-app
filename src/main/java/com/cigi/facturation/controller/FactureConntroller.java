@@ -7,6 +7,8 @@ import com.cigi.facturation.entity.Facture;
 import com.cigi.facturation.repository.FactureRepository;
 import com.cigi.facturation.service.FactureService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -47,8 +49,12 @@ public class FactureConntroller {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FactureDTO> findById(@PathVariable Long id) {
+    public ResponseEntity<Facture> findById(@PathVariable Long id) {
         return new ResponseEntity<>(factureService.findById(id), HttpStatus.OK);
+    }
+    @GetMapping
+    public ResponseEntity<Page<FactureDTO>> findAll(Pageable page) {
+        return new ResponseEntity<>(factureService.findAll(page), HttpStatus.OK);
     }
 
 }

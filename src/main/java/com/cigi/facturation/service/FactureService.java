@@ -10,7 +10,6 @@ import com.cigi.facturation.mapper.FactureMapper;
 import com.cigi.facturation.repository.CommandeRepository;
 import com.cigi.facturation.repository.FactureRepository;
 import com.cigi.facturation.repository.LigneCommandeRepository;
-import com.cigi.facturation.repository.ProduitRepository;
 import com.itextpdf.kernel.color.Color;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
@@ -23,8 +22,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
+import org.springframework.web.bind.annotation.GetMapping;
 
 
 import javax.servlet.http.HttpServletResponse;
@@ -96,16 +97,17 @@ public class FactureService {
 
 
     public Facture update(Facture facture, Long id) {
-
-        facture.setAncienneFacture(factureMapper.toEntity(findById(id)));
+        facture.setCommande(findById(id).getCommande());
+        facture.setAncienneFacture(findById(id));
+        facture.setId(null);
         save(facture);
         return  facture;
     }
 
-    public  FactureDTO findById(Long id) {
+    public  Facture findById(Long id) {
         Optional<Facture> facture = factureRepository.findById(id);
         if (facture.isPresent()) {
-            return factureMapper.toDTO(facture.get());
+            return facture.get();
         } else {
             throw new EntityNotFoundException("facture not found");
         }
@@ -172,12 +174,12 @@ public class FactureService {
             document.add(new Paragraph("Nom du Client :"+facture.getCommande().getClient().getNom()).setBold().setPaddingLeft(360f));
             document.add(new Paragraph("Ville : "+facture.getCommande().getClient().getVille()).setBold().setPaddingLeft(360f));
 
-            Table table = new Table(new float[]{20f, 50f, 30F});
+            Table table = new Table(new float[]{30F, 40F, 30F,  30F});
             table.setWidthPercent(100)
                     .setPadding(0)
                     .setFontSize(9);
 
-            Cell cell1 = new Cell(1,5);
+            Cell cell1 = new Cell(1,4);
             cell1.setTextAlignment(TextAlignment.CENTER);
             cell1.add("Facture Details").setBold();
             table.addCell(cell1);
@@ -231,4 +233,6 @@ public class FactureService {
             e.printStackTrace();
         }
     }
+
+
 }

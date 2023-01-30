@@ -1,5 +1,6 @@
 package com.cigi.facturation.controller;
 import com.cigi.facturation.dto.ProduitDTO;
+import com.cigi.facturation.entity.Produit;
 import com.cigi.facturation.service.ProduitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,7 +35,7 @@ public class ProduitController {
 
 
     @PostMapping
-    ResponseEntity<ProduitDTO> save(@RequestBody ProduitDTO produit) {
+    ResponseEntity<Produit> save(@RequestBody Produit produit) {
         return new ResponseEntity<>(produitservice.save(produit), HttpStatus.CREATED);
     }
 
