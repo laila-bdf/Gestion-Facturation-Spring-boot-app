@@ -2,12 +2,15 @@ package com.cigi.facturation.service;
 
 import com.cigi.facturation.dto.ClientDTO;
 import com.cigi.facturation.dto.FactureDTO;
+import com.cigi.facturation.dto.ProduitDTO;
 import com.cigi.facturation.entity.*;
 import com.cigi.facturation.exception.EntityNotFoundException;
 import com.cigi.facturation.exception.UnableToSaveEntityException;
 import com.cigi.facturation.mapper.FactureMapper;
 import com.cigi.facturation.repository.CommandeRepository;
 import com.cigi.facturation.repository.FactureRepository;
+import com.cigi.facturation.repository.LigneCommandeRepository;
+import com.cigi.facturation.repository.ProduitRepository;
 import com.itextpdf.kernel.color.Color;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
@@ -28,6 +31,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.swing.text.StyleConstants;
 import java.awt.*;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,12 +50,19 @@ public class FactureService {
     @Lazy
     private CommandeService commandeService;
     @Autowired
+   private  FactureService factureservice;
+    @Autowired
+
+    private ProduitService produitService;
+    @Autowired
     private FactureMapper factureMapper;
 
     @Autowired
     private LigneCommandeService ligneCommandeService;
-
-    public Page<FactureDTO> findAll(Pageable page) {
+    @Autowired
+    private LigneCommandeRepository ligneCommanderepository;
+    public Page<FactureDTO> findAll(Pageable page)
+    {
         return factureMapper.toDTO(factureRepository.findAll(page));
     }
 
@@ -96,7 +110,49 @@ public class FactureService {
             throw new EntityNotFoundException("facture not found");
         }
     }
+     public String typePayement(Facture f){
+         String option = " ";
+        if(f.getMontant_HTVA() <=5000){
+            option ="éspece";
+        }
+        else {
+            option="chéque";
+        }
+        return  option;
+     }
 
+     public List<ProduitDTO> ProduisEnruptureDeStock(Pageable page){
+        List<ProduitDTO> l = (List<ProduitDTO>) produitService.findAll(page);
+        List<ProduitDTO> l2=new ArrayList<>();
+        for(ProduitDTO l1: l){
+            if(l1.getStock()==0)
+                l2.add(l1);
+        }
+        return l2;
+     }
+     public List<FactureDTO> FactureNonPayes(Pageable page){
+         List<FactureDTO> l = (List<FactureDTO>) factureservice.findAll(page);
+         List<FactureDTO> l2=new ArrayList<>();
+        // SimpleDateFormat s = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+         //Date date = new Date();
+
+         for(FactureDTO l1: l){
+
+             if(l1.getEtat().equals("NON_PAYEE") )
+                 l2.add(l1);
+         }
+         return l2;
+     }
+     public List<String> ProduitsPlusDemandes(){
+         List<LigneCommande> l = (List<LigneCommande>) ligneCommanderepository.findByCountId();
+         List<String> l2=new ArrayList<>();
+         for(LigneCommande l1: l){
+
+
+                 l2.add(l1.getProduit().getNom());
+         }
+  return  l2;
+     }
     public  void factureDetailReport(HttpServletResponse response, Long id) throws IOException {
 
         PdfWriter writer = new PdfWriter(response.getOutputStream());

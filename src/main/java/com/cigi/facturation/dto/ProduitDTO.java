@@ -12,4 +12,5 @@ public class ProduitDTO {
     private String nom;
     private String description;
     private float prix ;
+    private int stock;
 }

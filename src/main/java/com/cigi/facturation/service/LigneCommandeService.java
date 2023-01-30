@@ -20,6 +20,10 @@ public class LigneCommandeService {
         List<LigneCommande> ligneCommandes = ligneCommandeRepository.findByCommande(commande);
         return ligneCommandes;
     }
+    public List<LigneCommande> ListProduitPlus(){
+        List<LigneCommande> ligneCommandes = ligneCommandeRepository.findAll();
+        return ligneCommandes;
+    }
 
     public List<LigneCommandeID> ListProduitbyID(Long id){
         List<LigneCommandeID> ligneCommandes = ligneCommandeRepository.findByid(id);
